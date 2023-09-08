@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,40 +16,43 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.API.projeto.DAO.IUsuario;
 import br.com.API.projeto.model.Usuario;
+import br.com.API.projeto.service.usuarioService;
 
 @RestController
 @CrossOrigin("*")
 @RequestMapping("/usuarios")
-public class UsuarioController{
+public class UsuarioController {
 
-//injeção de dependencias
-@Autowired
-private IUsuario dao;
+	private usuarioService UsuarioService;
 
-//listagem de usuarios
+	public UsuarioController(usuarioService UsuarioService) {
+		this.UsuarioService = UsuarioService;
+	}
+
+	// listagem de usuarios
 	@GetMapping
-	public List<Usuario> listaUsuarios () {
-		return (List<Usuario>) dao.findAll();
+	public ResponseEntity<List<Usuario>> listaUsuarios() {
+		return ResponseEntity.status(200).body(UsuarioService.listarUsuario());
 	}
-//criação de usuario
+
+	// criação de usuario
 	@PostMapping
-	public  Usuario criarUsuario(@RequestBody Usuario usuario) {
-		Usuario usuarioNovo = dao.save(usuario);
-		return usuario;
+	public ResponseEntity<Usuario> criarUsuario(@RequestBody Usuario usuario) {
+		return ResponseEntity.status(201).body(UsuarioService.criarusuario(usuario));
 	}
-//editar usuario
+
+	// editar usuario
 	@PutMapping
-	public  Usuario EditarUsuario(@RequestBody Usuario usuario) {
-		Usuario usuarioNovo = dao.save(usuario);
-		return usuario;
+	public ResponseEntity<Usuario> EditarUsuario(@RequestBody Usuario usuario) {
+		return ResponseEntity.status(200).body(UsuarioService.editarusuario(usuario));
 	}
-//deletar usuario, pelo endpoint
+
+	// deletar usuario, pelo endpoint
 	@DeleteMapping("/{id}")
-	public Optional<Usuario> DeletarUsuario(@PathVariable Integer id) {
-		Optional<Usuario> usuario = dao.findById(id);
-		dao.deleteById(id);
-		return usuario;
-	}	
+	public ResponseEntity<?> DeletarUsuario(@PathVariable Integer id) {
+		UsuarioService.deletarusuario(id);
+		return ResponseEntity.status(204).build(); // n tem corpo
+	}
+
 }
