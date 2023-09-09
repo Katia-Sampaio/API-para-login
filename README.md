@@ -61,7 +61,7 @@ Para iniciar o serviço da API, importe o projeto no eclipse, após a importaç�
 
 A API estará acessível em `http://localhost:3308` por padrão. 
 
-## Endpoints da API E MÉTODOS
+## Endpoints da API e métodos
 
 ### GET 
 
