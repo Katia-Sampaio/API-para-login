@@ -1,10 +1,28 @@
 const formulario = document.querySelector("form");
 const inputEmail = document.querySelector(".email");
 const inputSenha = document.querySelector(".senha");
+const modal = document.getElementById('myModal');
+const modalText = document.getElementById('modalText');
 
+
+function exibirModal(mensagem) {
+    modalText.textContent = mensagem;
+    modal.style.display = 'block';
+  
+    setTimeout(function () {
+      modal.style.display = 'none';
+      inputEmail.value = '';
+      inputSenha.value = '';
+    }, 2000); // Ocultar o modal após 2 segundos
+  }
 
 function cadastrar(){
     //conectar o front
+    Regex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?!.*\s)(?!.*(.).*\1)(?=.*[!@#%^&*()-+]).{9,}$/;
+
+    if(!Regex.test(inputSenha.value)){
+        exibirModal('Por favor digite uma senha válida !');
+    }else{
     fetch("http://localhost:8080/usuarios",
     {
 
@@ -20,7 +38,7 @@ function cadastrar(){
     })
     .then(function (res) { console.log(res)})
     .catch(function (res) { console.log(res)})
-    
+}
 };
 
 function limpar(){
