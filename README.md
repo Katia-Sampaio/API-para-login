@@ -7,9 +7,9 @@ A API de Login é um serviço que permite que os usuários façam login em um si
 ### Detalhes da Solução
 - **Métodos Suportados**: 
     - `POST` (para autenticação de login, diretamente na pag web)
-    - `GET` (Para buscar os usuarios cadastrados em sistema. Este método estará disponivel usando dietamente o endpoint da api no navegador)
-    - `PUT` (Para editar usuarios existentes no sistema, basta informar um usario ja existente no JSON da solicitação, atualizando os campos nescessários)
-    - `DELETE` (Para realizar a deleção de usuarios pelo ID)
+    - `GET` (Para buscar os usuários cadastrados em sistema. Este método estará disponível usando diretamente o endpoint da api no navegador)
+    - `PUT` (Para editar usuários existentes no sistema, basta informar um usuário ja existente no JSON da solicitação, atualizando os campos necessários)
+    - `DELETE` (Para realizar a deleção de usuários pelo ID)
 
 - **Validação de Senha**: A senha deve atender ao seguinte critério de regex: `^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?!.*\s)(?!.*(.).*\1)(?=.*[!@#%^&*()-+]).{9,}$`
 
@@ -61,20 +61,20 @@ Para iniciar o serviço da API, importe o projeto no eclipse, após a importaç�
 
 A API estará acessível em `http://localhost:3308` por padrão. 
 
-## Endpoints da API
+## Endpoints da API E MÉTODOS
 
 ### GET 
 
 - **URL**: `http://localhost:8080/usuarios `
-- **Requisitos**: Nenhum, basta usar a url no navegador de sua preferencia, ou realizar a solicitação usando o software Postman, passando a url e selecionando o metodo GET.
+- **Requisitos**: Basta usar a url no navegador de sua preferência, ou realizar a solicitação usando o software Postman, passando a url e selecionando o método GET.
 
 ### POST
 - **Requisitos**:  
     - Execute o arquivo index.html;
     - Logo será apresentada uma tela de login;
     - Preencha os campos corretamente;
-    - As informações serãm enviadas para o sistema;
-    - Será apresentado um boolean informando se a solicitação foi bem sussedida(true) ou não(false).
+    - As informações serão enviadas para o sistema;
+    - Será apresentado um boolean informando se a solicitação foi bem sucedidA ou não.
   
 
 #### Resposta de Sucesso:
@@ -87,24 +87,29 @@ A API estará acessível em `http://localhost:3308` por padrão.
 
  #### Exemplo de Solicitação:
 ```json
+[
 {
   "email": "usuario@email.com",
   "senha": "Senha@Segura123"
 }
+]
 ```
 ### PUT
 - **URL**: `http://localhost:8080/usuarios `
 - **Requisitos**:   
-    - Usando o Postman, preencha os campos do JSON, informando email e senha de um usuario já existente, alterando os campos que achar nescessário;
-    - informe a url e envie a solicitação
+    - Usando o Postman, preencha os campos do JSON, informando email e senha de um usuário já existente, alterando os campos que achar necessário;
+    - Informe a url e envie a solicitação
 
 
      #### Exemplo de Solicitação:
 ```json
+[
 {
-  "email": "usuario@email.com",
+    "id": 1,
+  "email": "usuarioalterado@email.com",
   "senha": "Senha@Segura123"
 }
+]
 ```
 ### DELETE
 - **URL**: `http://localhost:8080/usuarios/ID `
@@ -123,4 +128,3 @@ A API de Login oferece um serviço seguro para autenticação de usuários. Cert
 Se você tiver alguma dúvida ou problema, entre em contato com a equipe de suporte em `itau-suporte@recuperacaovarejo.com`.
 
 ---
-
