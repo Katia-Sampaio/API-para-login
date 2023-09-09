@@ -17,9 +17,9 @@
 
 
 body {
-    background: #ecd490; /* fallback for old browsers */
-    background: -webkit-linear-gradient(to right, #fdc830, #eb986e); /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to right, #d3b86f, #ee8855); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */  
+    background: #ecd490; 
+    background: -webkit-linear-gradient(to right, #fdc830, #eb986e);
+    background: linear-gradient(to right, #d3b86f, #ee8855);  
     font-family: Ubuntu-Regular, sans-serif;
 }
 

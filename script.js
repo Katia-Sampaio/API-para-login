@@ -17,12 +17,16 @@ function exibirModal(mensagem) {
   }
 
 function cadastrar(){
+    var resp = false;
     //conectar o front
     Regex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?!.*\s)(?!.*(.).*\1)(?=.*[!@#%^&*()-+]).{9,}$/;
 
     if(!Regex.test(inputSenha.value)){
-        exibirModal('Por favor digite uma senha válida !');
+     
+        exibirModal(resp);
     }else{
+    var resp = true;
+    exibirModal(resp);
     fetch("http://localhost:8080/usuarios",
     {
 
