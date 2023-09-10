@@ -7,9 +7,9 @@ A API de Login é um serviço que permite que os usuários façam login em um si
 ### Detalhes da Solução
 - **Métodos Suportados**: 
     - `POST` (para autenticação de login, diretamente na pag web)
-    - `GET` (Para buscar os usuários cadastrados em sistema. Este método estará disponível usando diretamente o endpoint da api no navegador)
-    - `PUT` (Para editar usuários existentes no sistema, basta informar um usuário ja existente no JSON da solicitação, atualizando os campos necessários)
-    - `DELETE` (Para realizar a deleção de usuários pelo ID)
+    - `GET` (Para buscar os usuários cadastrados em sistema.)
+    - `PUT` (Para editar usuários existentes no sistema.)
+    - `DELETE` (Para realizar a deleção de usuários no sistema pelo ID)
 
 - **Validação de Senha**: A senha deve atender ao seguinte critério de regex: `^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?!.*\s)(?!.*(.).*\1)(?=.*[!@#%^&*()-+]).{9,}$`
 
@@ -24,16 +24,14 @@ A API de Login é um serviço que permite que os usuários façam login em um si
 ## Como Executar o Projeto
 
 ### Requisitos de Software
-Antes de executar o projeto, certifique-se de ter o seguinte software instalado em sua máquina:
+Antes de executar o projeto, certifique-se de ter os seguintes softwares instalados em sua máquina:
 - SpringBoot (versão 3.1.3)
 - Java (Linguagem – Versão 17)
 - Maven (gerenciador de dependências)
 - Banco de Dados MySql (Versão 8.0.21)
 - Eclipse IDE (Versão 2019-09)
-
-### Para solicitações PUT, DELETE
-Certifique-se de ter o seguinte software instalado em sua máquina:
 - Postman (Versão. 9.16.0)
+
 
 ### Configuração Inicial
 1. Clone este repositório para o seu computador:
@@ -74,7 +72,8 @@ A API estará acessível em `http://localhost:3308` por padrão.
     - Logo será apresentada uma tela de login;
     - Preencha os campos corretamente;
     - As informações serão enviadas para o sistema;
-    - Será apresentado um boolean informando se a solicitação foi bem sucedidA ou não.
+    - Será apresentado um boolean informando se a solicitação foi bem sucedida ou não.
+    - Caso prefira a solicitação pode ser feita via Postman.
   
 
 #### Resposta de Sucesso:
@@ -85,19 +84,19 @@ A API estará acessível em `http://localhost:3308` por padrão.
 
  
 
- #### Exemplo de Solicitação:
+ #### Exemplo de Solicitação via Postman:
 ```json
 [
 {
   "email": "usuario@email.com",
-  "senha": "Senha@Segura123"
+  "senha": "AbTp!9fok"
 }
 ]
 ```
 ### PUT
 - **URL**: `http://localhost:8080/usuarios `
 - **Requisitos**:   
-    - Usando o Postman, preencha os campos do JSON, informando email e senha de um usuário já existente, alterando os campos que achar necessário;
+    - Usando o Postman, preencha os campos do JSON, informando o id, email e senha de um usuário já existente, alterando os campos que achar necessário;
     - Informe a url e envie a solicitação
 
 
@@ -107,7 +106,7 @@ A API estará acessível em `http://localhost:3308` por padrão.
 {
     "id": 1,
   "email": "usuarioalterado@email.com",
-  "senha": "Senha@Segura123"
+  "senha": "AbTp!9fok"
 }
 ]
 ```
