@@ -18,9 +18,10 @@ function exibirModal(mensagem) {
 
 function cadastrar(){
     var resp = false;
-    //conectar o front
+    
     Regex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?!.*\s)(?!.*(.).*\1)(?=.*[!@#%^&*()-+]).{9,}$/;
-
+    
+    //validação apenas da senha como pedido na task
     if(!Regex.test(inputSenha.value)){
      
         exibirModal(resp);
@@ -34,7 +35,7 @@ function cadastrar(){
             'Accept':'application/json',
             'Content-Type': 'application/json'
         },
-        method: "POST",
+        method: "GET",
         body: JSON.stringify({
             email: inputEmail.value,
             senha: inputSenha.value

@@ -3,7 +3,7 @@ package br.com.API.projeto.controller;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,7 +25,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.API.projeto.model.Usuario;
 import br.com.API.projeto.service.usuarioService;
+import io.micrometer.common.util.StringUtils;
 import jakarta.validation.Valid;
+
+import java.util.regex.Pattern;
 
 @RestController
 @CrossOrigin("*")
@@ -47,12 +50,18 @@ public class UsuarioController {
 	// criação de usuario
 	@PostMapping
 	public ResponseEntity<Usuario> criarUsuario(@Valid @RequestBody Usuario usuario) {
+		if (!validarSenha(usuario.getSenha())) {
+			throw new SenhaInvalidaException("FALSE - Senha inválida");
+		}
 		return ResponseEntity.status(201).body(UsuarioService.criarusuario(usuario));
 	}
 
 	// editar usuario
 	@PutMapping
 	public ResponseEntity<Usuario> EditarUsuario(@Valid @RequestBody Usuario usuario) {
+		if (!validarSenha(usuario.getSenha())) {
+			throw new SenhaInvalidaException("FALSE - Senha inválida");
+		}
 		return ResponseEntity.status(200).body(UsuarioService.editarusuario(usuario));
 	}
 
@@ -63,7 +72,20 @@ public class UsuarioController {
 		return ResponseEntity.status(204).build(); // n tem corpo
 	}
 
-	// tratamento de erro - campos vazios
+	// validação dos dados
+	private static final String REGEX_VALIDACAO_SENHA = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()-+])(?=\\S+$).{9,}$";
+
+	public static boolean validarSenha(String senha) {
+		StringUtils.isBlank(senha);
+		Pattern pattern = Pattern.compile(REGEX_VALIDACAO_SENHA); // compilando a expressão regular
+		return pattern.matcher(senha).matches() && caracteresUnicos(senha);
+	}
+
+	private static boolean caracteresUnicos(String senha) {
+		return senha.chars().distinct().count() == senha.length();
+	}
+
+	// manipulador de exceções - campos vazios
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public Map<String, String> handleValidationException(MethodArgumentNotValidException ex) {
@@ -78,4 +100,13 @@ public class UsuarioController {
 
 		return errors;
 	}
+
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	@ExceptionHandler(SenhaInvalidaException.class)
+	public Map<String, String> handleSenhaInvalidaException(SenhaInvalidaException ex) {
+		Map<String, String> errors = new HashMap<>();
+		errors.put("senha", ex.getMessage());
+		return errors;
+	}
+
 }
