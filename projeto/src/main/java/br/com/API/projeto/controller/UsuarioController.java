@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -73,14 +72,14 @@ public class UsuarioController {
 	}
 
 	// validação dos dados
-	private static final String REGEX_VALIDACAO_SENHA = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()-+])(?=\\S+$).{9,}$";
+	private static final String REGEX_VALIDACAO_SENHA = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()+-])(?=\\S+$).{9,}$";
 
 	public static boolean validarSenha(String senha) {
-		StringUtils.isBlank(senha);
 		Pattern pattern = Pattern.compile(REGEX_VALIDACAO_SENHA); // compilando a expressão regular
 		return pattern.matcher(senha).matches() && caracteresUnicos(senha);
 	}
 
+	// método auxiliar que verifica se todos os caracteres na senha são únicos.
 	private static boolean caracteresUnicos(String senha) {
 		return senha.chars().distinct().count() == senha.length();
 	}
