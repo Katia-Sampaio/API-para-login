@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -18,13 +17,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.API.projeto.exception.SenhaException;
 import br.com.API.projeto.model.Usuario;
 import br.com.API.projeto.service.usuarioService;
-import io.micrometer.common.util.StringUtils;
 import jakarta.validation.Valid;
 
 import java.util.regex.Pattern;
@@ -50,7 +48,7 @@ public class UsuarioController {
 	@PostMapping
 	public ResponseEntity<Usuario> criarUsuario(@Valid @RequestBody Usuario usuario) {
 		if (!validarSenha(usuario.getSenha())) {
-			throw new SenhaInvalidaException("FALSE - Senha inválida");
+			throw new SenhaException("FALSE - Senha inválida");
 		}
 		return ResponseEntity.status(201).body(UsuarioService.criarusuario(usuario));
 	}
@@ -59,7 +57,7 @@ public class UsuarioController {
 	@PutMapping
 	public ResponseEntity<Usuario> EditarUsuario(@Valid @RequestBody Usuario usuario) {
 		if (!validarSenha(usuario.getSenha())) {
-			throw new SenhaInvalidaException("FALSE - Senha inválida");
+			throw new SenhaException("FALSE - Senha inválida");
 		}
 		return ResponseEntity.status(200).body(UsuarioService.editarusuario(usuario));
 	}
@@ -101,8 +99,8 @@ public class UsuarioController {
 	}
 
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
-	@ExceptionHandler(SenhaInvalidaException.class)
-	public Map<String, String> handleSenhaInvalidaException(SenhaInvalidaException ex) {
+	@ExceptionHandler(SenhaException.class)
+	public Map<String, String> handleSenhaInvalidaException(SenhaException ex) {
 		Map<String, String> errors = new HashMap<>();
 		errors.put("senha", ex.getMessage());
 		return errors;
